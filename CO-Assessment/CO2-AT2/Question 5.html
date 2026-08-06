@@ -1,1 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireless Network Decision Dashboard</title>
+<style>
+body
+  {font-family:Arial,
+    sans-serif;
+   background:#eef2f7;
+   margin:0}
+header
+  {background:#1f4e79;
+   color:#fff;
+   padding:20px;
+   text-align:center}
+.container{
+  max-width:900px;
+  margin:20px auto;
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.grid
+  {display:grid;
+   grid-template-columns:1fr 1fr;
+   gap:15px}
+label
+  {font-weight:bold}
+select
+  {width:100%;
+   padding:8px;
+   margin-top:5px}
+button
+  {margin-top:20px;
+   padding:12px 20px;
+   background:#1f4e79;
+   color:#fff;border:none;
+   border-radius:6px;
+   cursor:pointer}
+button:hover{background:#163b5c}
+.result{margin-top:20px;padding:15px;border-left:5px solid #1f4e79;background:#f4f8fc}
+table{width:100%;border-collapse:collapse;margin-top:20px}
+th,td{border:1px solid #ccc;padding:8px;text-align:center}
+th{background:#1f4e79;color:white}
+</style>
+</head>
+<body>
+<header>
+<h1>Wireless Network Decision Dashboard</h1>
+<p>Recommendation: Mobile IP vs Cellular Network vs Ad Hoc Network</p>
+</header>
 
+<div class="container">
+<div class="grid">
+<div>
+<label>Node Mobility</label>
+<select id="mobility">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+</div>
+
+<div>
+<label>Infrastructure Availability</label>
+<select id="infra">
+<option>Available</option>
+<option>Not Available</option>
+</select>
+</div>
+
+<div>
+<label>Network Size</label>
+<select id="size">
+<option>Small</option>
+<option>Medium</option>
+<option>Large</option>
+</select>
+</div>
+
+<div>
+<label>Routing Complexity</label>
+<select id="routing">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+</div>
+
+<div>
+<label>Energy Consumption Priority</label>
+<select id="energy">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+</div>
+
+<div>
+<label>Reliability Requirement</label>
+<select id="reliability">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+</div>
+</div>
+
+<button onclick="recommend()">Analyze Network</button>
+
+<div id="output" class="result">
+Select the parameters and click <b>Analyze Network</b>.
+</div>
+
+<table>
+<tr>
+<th>Technology</th>
+<th>Best Scenario</th>
+</tr>
+<tr>
+<td>Mobile IP</td>
+<td>High mobility with infrastructure</td>
+</tr>
+<tr>
+<td>Cellular Network</td>
+<td>Large coverage with reliable infrastructure</td>
+</tr>
+<tr>
+<td>Ad Hoc Network</td>
+<td>No infrastructure, temporary communication</td>
+</tr>
+</table>
+</div>
+
+<script>
+function recommend(){
+let mobility=document.getElementById("mobility").value;
+let infra=document.getElementById("infra").value;
+let size=document.getElementById("size").value;
+let routing=document.getElementById("routing").value;
+let energy=document.getElementById("energy").value;
+let reliability=document.getElementById("reliability").value;
+
+let tech="",reason=[];
+
+if(infra==="Not Available"){
+tech="Ad Hoc Network";
+reason.push("Infrastructure is unavailable.");
+reason.push("Nodes communicate directly.");
+}
+else if(mobility==="High" && reliability==="High"){
+tech="Mobile IP";
+reason.push("High mobility requires seamless handoff.");
+reason.push("Mobile IP maintains connectivity while moving.");
+}
+else{
+tech="Cellular Network";
+reason.push("Infrastructure exists.");
+reason.push("Suitable for wide-area communication.");
+}
+
+if(size==="Large") reason.push("Supports a large network.");
+if(routing==="High") reason.push("Handles complex routing.");
+if(energy==="High") reason.push("Energy-efficient operation is important.");
+
+document.getElementById("output").innerHTML=
+"<h2>Recommended Technology: "+tech+"</h2>"+
+"<p><b>Analysis</b></p><ul><li>"+reason.join("</li><li>")+
+"</li></ul>";
+}
+</script>
+</body>
+</html>
